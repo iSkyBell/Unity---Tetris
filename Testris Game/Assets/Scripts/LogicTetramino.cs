@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LogicTetramino : MonoBehaviour
 {
@@ -14,12 +12,13 @@ public class LogicTetramino : MonoBehaviour
     public static int width = 10;
     public Vector3 rotationPoint;
     private static Transform[,] grid = new Transform[width, high];
+    public static int score;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -53,6 +52,7 @@ public class LogicTetramino : MonoBehaviour
             {
                 transform.position += new Vector3(0, 1, 0);
                 addGrid();
+                checkLines();
                 this.enabled = false;
                 FindObjectOfType<GenerateTetramino>().newTetramino();
             }
@@ -69,7 +69,6 @@ public class LogicTetramino : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
             }
         }
-
     }
 
     /**
@@ -98,7 +97,8 @@ public class LogicTetramino : MonoBehaviour
     }
 
     /**
-     * Metodo que nos ayuda con el transform para agregar que en la posición tal ya hay un objecto.
+     * Metodo que nos ayuda con el transform para agregar que en la posición "tal" ya hay un objecto.
+     * Nos ayuda a estar atentos que ya hay un objecto en una posición.
      * */
     void addGrid()
     {
@@ -109,6 +109,74 @@ public class LogicTetramino : MonoBehaviour
 
             grid[wholeX, wholeY] = transformChild;
 
+            if (wholeY >= 19)
+            {
+                score = 0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+    }
+
+    /**
+     * Verificar si hay lineas completas, de ser así, se eliminan.
+     * */
+    void checkLines()
+    {
+        for (int idx = high - 1; idx >= 0; idx--)
+        {
+            if (hasLine(idx))
+            {
+                deleteLine(idx);
+                goDownLine(idx);
+            }
+        }
+    }
+
+    /**
+     * Verificar si ya hay una linea completa en el juego.
+     * */
+    bool hasLine(int param)
+    {
+        for (int idx = 0; idx < width; idx++)
+        {
+            if (grid[idx,param] == null)
+            {
+                return false;
+            }
+        }
+        score += 100;
+        FindObjectOfType<GenerateScore>().showScore(score);
+        return true;
+    }
+
+    /**
+     * Destruye los objectos
+     * */
+    void deleteLine(int param)
+    {
+        for (int idx = 0; idx < width; idx++)
+        {
+            Destroy(grid[idx, param].gameObject);
+            grid[idx, param] = null;
+        }
+    }
+
+    /**
+     * Si se destruye algo, baja lo que hay y lo que bajo lo deja nulo.
+     * */
+    void goDownLine(int param)
+    {
+        for (int idx = param; idx < high; idx++)
+        {
+            for (int idxj = 0; idxj < width; idxj++)
+            {
+                if (grid[idxj, idx] != null)
+                {
+                    grid[idxj, idx - 1] = grid[idxj, idx];
+                    grid[idxj, idx] = null;
+                    grid[idxj, idx - 1].transform.position -= new Vector3(0, 1, 0);
+                }
+            }
         }
     }
 }
