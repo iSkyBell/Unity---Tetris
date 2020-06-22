@@ -13,6 +13,7 @@ public class LogicTetramino : MonoBehaviour
     public Vector3 rotationPoint;
     private static Transform[,] grid = new Transform[width, high];
     public static int score;
+    public static int difficultyLevel = 0;
     #endregion
 
     // Start is called before the first frame update
@@ -69,6 +70,9 @@ public class LogicTetramino : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
             }
         }
+
+        increaseDifficulty();
+        increasePlayerDifficulty();
     }
 
     /**
@@ -112,6 +116,8 @@ public class LogicTetramino : MonoBehaviour
             if (wholeY >= 19)
             {
                 score = 0;
+                difficultyLevel = 0;
+                timeDown = 0.8f;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
@@ -177,6 +183,38 @@ public class LogicTetramino : MonoBehaviour
                     grid[idxj, idx - 1].transform.position -= new Vector3(0, 1, 0);
                 }
             }
+        }
+    }
+
+    /**
+     * Dependiendo del puntaje, se aumentara el nivel de dificultad al jugador
+     * */
+    void increaseDifficulty()
+    {
+        switch (score)
+        {
+            case 200:
+                difficultyLevel = 1;
+                break;
+            case 400:
+                difficultyLevel = 2;
+                break;
+        }
+    }
+
+    /**
+     * Dependiendo del puntaje, disminuira el tiempo de caida del objecto.
+     * */
+    void increasePlayerDifficulty()
+    {
+        switch (difficultyLevel)
+        {
+            case 1:
+                timeDown = 0.5f;
+                break;
+            case 2:
+                timeDown = 0.3f;
+                break;
         }
     }
 }
