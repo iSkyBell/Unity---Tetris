@@ -219,7 +219,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!212 &1361490136
 SpriteRenderer:
@@ -270,7 +270,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1361490137
 Transform:
   m_ObjectHideFlags: 0
@@ -294,6 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1427434221}
+  - component: {fileID: 1427434222}
   m_Layer: 0
   m_Name: PartGenerator
   m_TagString: Untagged
@@ -315,3 +316,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1427434222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427434220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19be59fe30d24e44789d7a90f111d9f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tetramino:
+  - {fileID: 4579169492801351586, guid: 19ee6faa66f34a84f9602b89133d05a5, type: 3}
+  - {fileID: 8195221663439700262, guid: 5923232893f53a4439f5b83dba61ddf3, type: 3}
+  - {fileID: 5096813956612185385, guid: 85a85c443b20cd8468d1049f4e2d9b6b, type: 3}
+  - {fileID: 3944999162037706348, guid: 7f80033382ae2794dadcadb45a482a4a, type: 3}
+  - {fileID: 1370775808306412637, guid: 38a74351011ee28419ed58c720f31e60, type: 3}
+  - {fileID: 2055034788743310058, guid: 5ffd0a37cabbf684fb5ef48d602dacd1, type: 3}
+  - {fileID: 131351511699382974, guid: 401b85d74e28bc7448a65b4ac0fa2bee, type: 3}

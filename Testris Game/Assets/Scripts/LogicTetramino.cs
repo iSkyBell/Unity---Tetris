@@ -25,6 +25,7 @@ public class LogicTetramino : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Move Left object
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
@@ -34,6 +35,7 @@ public class LogicTetramino : MonoBehaviour
             }
         }
 
+        // Move Rigth object
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
@@ -43,6 +45,7 @@ public class LogicTetramino : MonoBehaviour
             }
         }
 
+        // Fall object automatic, if press the button down, the object fall quickly.
         if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? timeDown / 20 : timeDown))
         {
             transform.position += new Vector3(0, -1, 0);
@@ -56,6 +59,17 @@ public class LogicTetramino : MonoBehaviour
 
             previousTime = Time.time;
         }
+
+        // When press key up, the object rotate -90 gradles. 
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), -90);
+            if (!limits())
+            {
+                transform.RotateAround(transform.TransformPoint(rotationPoint), new Vector3(0, 0, 1), 90);
+            }
+        }
+
     }
 
     /**
@@ -94,7 +108,6 @@ public class LogicTetramino : MonoBehaviour
             int wholeY = Mathf.RoundToInt(transformChild.transform.position.y);
 
             grid[wholeX, wholeY] = transformChild;
-
 
         }
     }
